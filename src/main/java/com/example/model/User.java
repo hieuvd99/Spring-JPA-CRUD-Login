@@ -34,8 +34,8 @@ public class User{
     @Email
     private String email;
     
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date dob;
+    @DateTimeFormat(pattern="dd-MM-yyyy")
+    private String dob;
     
     @JsonIgnore	
     @NotBlank
@@ -67,11 +67,11 @@ public class User{
 		this.email = email;
 	}
 
-	public Date getDob() {
+	public String getDob() {
 		return dob;
 	}
 
-	public void setDob(Date dob) {
+	public void setDob(String dob) {
 		this.dob = dob;
 	}
 

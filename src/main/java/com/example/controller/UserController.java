@@ -1,22 +1,17 @@
 package com.example.controller;
 
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.model.User;
 import com.example.service.UserService;
@@ -41,7 +36,8 @@ public class UserController {
 		    user.setPassword(encodedPassword);
 		    user.setEmail("admin@gmail.com");
 		    Date createDate = new Date();
-		    user.setDob(createDate);
+		    SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		    user.setDob(formatter.format(createDate));
 		    userService.save(user);
 	    }
 		return "home";
