@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +40,8 @@ public class UserController {
 		    user.setUsername(username);
 		    user.setPassword(encodedPassword);
 		    user.setEmail("admin@gmail.com");
+		    Date createDate = new Date();
+		    user.setDob(createDate);
 		    userService.save(user);
 	    }
 		return "home";
