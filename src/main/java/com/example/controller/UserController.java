@@ -43,6 +43,12 @@ public class UserController {
 		return "home";
 	}
 	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String loginPage(Model model) {
+
+		return "loginPage";
+	}
+
 	@RequestMapping(value = "/admin/list", method = RequestMethod.GET)
 	public String listUser(Model model){
         List<User> user = userService.findAll();
