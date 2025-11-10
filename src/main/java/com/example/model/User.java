@@ -18,7 +18,7 @@ import lombok.Data;
 
 
 @Entity
-@Table(name = "user", schema = "crudlogin")
+@Table(name = "user_entity")
 public class User{
 
 	@Id
