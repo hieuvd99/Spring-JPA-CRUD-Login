@@ -19,7 +19,7 @@ jobs:
 
     - name: Build project
       run: |
-        cd _work/CI-CD_GithubAction_JavaProject/CI-CD_GithubAction_JavaProject
+        cd $GITHUB_WORKSPACE
         mvn clean package -DskipTests
 
     - name: Stop old app
