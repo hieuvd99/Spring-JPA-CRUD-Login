@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: CI/CD to Dev Server
 
 on:
   push:
@@ -6,8 +6,9 @@ on:
       - master
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+  build-and-run:
+    runs-on: self-hosted
+    name: Build and Run on Dev Server
 
     steps:
     - name: Checkout code
@@ -19,18 +20,13 @@ jobs:
         distribution: 'temurin'
         java-version: '17'
 
-    - name: Build with Maven
+    - name: Build project
       run: mvn clean package -DskipTests
 
-    - name: Deploy to Server via SSH
-      uses: appleboy/ssh-action@v0.1.8
-      with:
-        host: ${{ secrets.DEPLOY_SERVER_IP }}
-        username: ${{ secrets.DEPLOY_SERVER_USER }}
-        key: ${{ secrets.DEPLOY_SSH_KEY }}
-        port: 22
-        script: |
-          cd /home/hieuvd/deploy-folder
-          git pull origin main
-          mvn clean package -DskipTests
-          sudo systemctl restart myapp
+    - name: Stop old app
+      run: |
+        pkill -f 'java -jar target/CRUD-Login-0.0.1-SNAPSHOT.jar' || true
+
+    - name: Run new app
+      run: |
+        nohup java -jar target/CRUD-Login-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
