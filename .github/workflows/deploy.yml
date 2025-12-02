@@ -22,10 +22,5 @@ jobs:
         cd $GITHUB_WORKSPACE
         mvn clean package -DskipTests
 
-    - name: Stop old app
-      run: pkill -f 'java -jar target/CRUD-Login-0.0.1-SNAPSHOT.jar' || true
-
-    - name: Run new app
-      run: |
-        cd $GITHUB_WORKSPACE
-        nohup java -jar target/CRUD-Login-0.0.1-SNAPSHOT.jar > app.log 2>&1 &
+    - name: Restart Spring Boot App
+      run: sudo systemctl restart myapp
