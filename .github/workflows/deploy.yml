@@ -28,3 +28,29 @@ jobs:
 
     - name: Restart Spring Boot App
       run: sudo systemctl restart myapp
+
+    - name: Notify Telegram
+      if: success()
+      uses: appleboy/telegram-action@v0.3.0
+      with:
+        to: ${{ secrets.TELEGRAM_CHAT_ID }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          ✅ Deployment successful
+          PR: ${{ github.event.pull_request.title }}
+          Branch: ${{ github.event.pull_request.head.ref }}
+          PR Link: ${{ github.event.pull_request.html_url }}
+          Author: ${{ github.event.pull_request.user.login }}
+
+    - name: Notify Telegram
+      if: failure()
+      uses: appleboy/telegram-action@v0.3.0
+      with:
+        to: ${{ secrets.TELEGRAM_CHAT_ID }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          ❌ Deployment failed
+          PR: ${{ github.event.pull_request.title }}
+          Branch: ${{ github.event.pull_request.head.ref }}
+          PR Link: ${{ github.event.pull_request.html_url }}
+          Author: ${{ github.event.pull_request.user.login }}
