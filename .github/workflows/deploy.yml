@@ -29,7 +29,7 @@ jobs:
     - name: Restart Spring Boot App
       run: sudo systemctl restart myapp
 
-    - name: Notify Telegram
+    - name: Notify Telegram Success
       if: success()
       uses: appleboy/telegram-action@v0.3.0
       with:
@@ -42,7 +42,7 @@ jobs:
           PR Link: ${{ github.event.pull_request.html_url }}
           Author: ${{ github.event.pull_request.user.login }}
 
-    - name: Notify Telegram
+    - name: Notify Telegram Failure
       if: failure()
       uses: appleboy/telegram-action@v0.3.0
       with:
