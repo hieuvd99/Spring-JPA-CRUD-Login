@@ -17,10 +17,14 @@ jobs:
     - name: Show workspace
       run: echo "GITHUB_WORKSPACE is:$GITHUB_WORKSPACE"
 
+    - name: Run Unit Tests
+      run: mvn test
+
+    - name: Run SpotBugs
+      run: mvn spotbugs:spotbugs  
+
     - name: Build project
-      run: |
-        cd $GITHUB_WORKSPACE
-        mvn clean package -DskipTests
+      run: mvn -B clean package -DskipTests
 
     - name: Restart Spring Boot App
       run: sudo systemctl restart myapp
