@@ -75,3 +75,33 @@ jobs:
           Branch: ${{ env.PR_BRANCH }}
           PR Link: ${{ env.PR_LINK }}
           Author: ${{ env.PR_AUTHOR }}
+
+    - name: Notify Slack Success
+      if: success()
+      uses: slackapi/slack-github-action@v2.0.0
+      with:
+        method: chat.postMessage
+        token: ${{ secrets.SLACK_TOKEN }}
+        payload: |
+          channel: ${{ secrets.SLACK_CHANNEL_ID }}
+          text: |
+            ✅ Deployment successful
+            PR: ${{ env.PR_TITLE }}
+            Branch: ${{ env.PR_BRANCH }}
+            PR Link: ${{ env.PR_LINK }}
+            Author: ${{ env.PR_AUTHOR }}
+
+    - name: Notify Slack Failure
+      if: failure()
+      uses: slackapi/slack-github-action@v2.0.0
+      with:
+        method: chat.postMessage
+        token: ${{ secrets.SLACK_TOKEN }}
+        payload: |
+          channel: ${{ secrets.SLACK_CHANNEL_ID }}
+          text: |
+            ❌ Deployment failed
+            PR: ${{ env.PR_TITLE }}
+            Branch: ${{ env.PR_BRANCH }}
+            PR Link: ${{ env.PR_LINK }}
+            Author: ${{ env.PR_AUTHOR }}
