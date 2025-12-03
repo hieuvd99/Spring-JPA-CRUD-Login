@@ -1,0 +1,22 @@
+name: PR Quality Check
+
+on:
+  pull_request:
+    branches:
+      - master
+      - develop
+
+jobs:
+  pr-check:
+    runs-on: ubuntu-latest
+    name: Run Tests & SpotBugs for PR
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Run Unit Tests
+        run: mvn test
+
+      - name: Run SpotBugs
+        run: mvn spotbugs:spotbugs
