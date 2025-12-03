@@ -33,3 +33,16 @@ jobs:
             Branch: ${{ github.event.pull_request.head.ref }}
             PR Link: ${{ github.event.pull_request.html_url }}
             Author: ${{ github.event.pull_request.user.login }}
+
+      - name: Notify Slack Success
+        if: success()
+        uses: slackapi/slack-github-action@v1.25.0
+        with:
+          channel-id: ${{ secrets.SLACK_CHANNEL_ID }}
+          slack-message: |
+            ✅ PR Created
+            PR: ${{ github.event.pull_request.title }}
+            Branch: ${{ github.event.pull_request.head.ref }}
+            PR Link: ${{ github.event.pull_request.html_url }}
+            Author: ${{ github.event.pull_request.user.login }}
+          slack-token: ${{ secrets.SLACK_TOKEN }}
